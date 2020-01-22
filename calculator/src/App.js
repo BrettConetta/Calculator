@@ -7,14 +7,14 @@ class App extends Component  {
   state = {
     currentVal: "_",
     start: true,
-    operators: false,
-    zeroFirst: true,
+    operatorsAllowed: false,
     numAllowed: true,
+    zeroFirst: true,
     zeroFirstAgo: 0,
     operatorsAgo: 0,
     decimalAgo: 0,
     oldOperators: 0,
-    decimal: true
+    decimalAllowed: true
   };
 
   numberClickHandler = (event) => {
@@ -22,25 +22,25 @@ class App extends Component  {
       this.setState({ 
         currentVal: `${event.currentTarget.value}`,
         start: false, 
+        operatorsAllowed: true, 
+        numAllowed: true,
         oldOperators: this.state.operatorsAgo, 
-        operators: true, 
         operatorsAgo: 1,
         zeroFirst: true,
-        numAllowed: true,
         zeroFirstAgo: this.state.zeroFirstAgo+1,
         decimalAgo: this.state.decimalAgo+1,
-        //decimal: true
+        //decimalAllowed: true
       });
     }
     else{
       
       this.setState({ 
         currentVal: `${this.state.currentVal}${event.currentTarget.value}`,
-        operators: true,
+        operatorsAllowed: true,
+        numAllowed: true,
         oldOperators: this.state.operatorsAgo,
         operatorsAgo: this.state.operatorsAgo+1,
         zeroFirst: true,
-        numAllowed: true,
         zeroFirstAgo: this.state.zeroFirstAgo+1,
         decimalAgo: this.state.decimalAgo+1,
         //decimal: true
@@ -52,12 +52,12 @@ class App extends Component  {
     this.setState({ 
       currentVal: `${this.state.currentVal}${event.currentTarget.value}`,
       start: false, 
-      operators: false, 
+      operatorsAllowed: false, 
+      numAllowed: true,
       oldOperators: this.state.operatorsAgo,
       operatorsAgo: 0,
-      decimal: true,
+      decimalAllowed: true,
       zeroFirst: true,
-      numAllowed: true,
       zeroFirstAgo: this.state.zeroFirstAgo+1,
       decimalAgo: this.state.decimalAgo+1
     });
@@ -67,12 +67,12 @@ class App extends Component  {
     this.setState({ 
       currentVal: `${this.state.currentVal}${event.currentTarget.value}`,
       start: false, 
-      operators: false, 
+      operatorsAllowed: false, 
+      numAllowed: true,
       oldOperators: this.state.operatorsAgo,
       operatorsAgo: 0,
-      decimal: true,
+      decimalAllowed: true,
       zeroFirst: false,
-      numAllowed: true,
       zeroFirstAgo: this.state.zeroFirstAgo+1,
       decimalAgo: this.state.decimalAgo+1
     });
@@ -82,14 +82,14 @@ class App extends Component  {
     this.setState({ 
       currentVal: "_", 
       start: true, 
-      operators: false,
+      operatorsAllowed: false,
+      numAllowed: true,
       operatorsAgo: 0,
       oldOperators: 0,
       zeroFirst: true,
-      numAllowed: true,
       zeroFirstAgo: 0,
       decimalAgo: 0,
-      decimal: true
+      decimalAllowed: true
     });
   }
 
@@ -100,10 +100,10 @@ class App extends Component  {
 
     this.setState({ 
       currentVal: newStr,
+      start: true,
       operatorsAgo: newStr.length,
       oldOperators: newStr.length,
-      start: true,
-      decimal: true});
+      decimalAllowed: true});
   }
 
   bkspcClickHandler = () => {
@@ -115,8 +115,8 @@ class App extends Component  {
       
       this.setState({ 
         currentVal: `${newStr}`, 
-        operators: false, 
         start: false, 
+        operatorsAllowed: false, 
         zeroFirst: false,
         operatorsAgo: this.state.oldOperators,
         decimalAgo: this.state.decimalAgo-1
@@ -125,7 +125,7 @@ class App extends Component  {
     else if(len > 1 && this.state.operatorsAgo === 1) //if last char is operator
       this.setState({ 
         currentVal: `${newStr}`, 
-        operators: false, 
+        operatorsAllowed: false, 
         start: false, 
         operatorsAgo: this.state.oldOperators,
         decimalAgo: this.state.decimalAgo-1
@@ -133,30 +133,30 @@ class App extends Component  {
     else if(len > 1 && this.state.zeroFirstAgo === 1) //if last char is a 0
       this.setState({ 
         currentVal: `${newStr}`, 
-        operators: true, 
         start: false,
+        operatorsAllowed: true, 
         oldOperators: this.state.oldOperators-1,
         operatorsAgo: this.state.operatorsAgo-1,
         zeroFirstAgo: this.state.zeroFirstAgo-1,
         zeroFirst: false,
         decimalAgo: this.state.decimalAgo-1,
-        decimal: true
+        decimalAllowed: true
       });
     else if(len > 1 && this.state.decimalAgo === 1) //if last char is a decimal
       this.setState({ 
         currentVal: `${newStr}`,
         start: false, 
-        operators: true, 
+        operatorsAllowed: true, 
         operatorsAgo: this.state.operatorsAgo-1,
         zeroFirstAgo: this.state.zeroFirstAgo-1,
         decimalAgo: this.state.decimalAgo-1,
-        decimal: false
+        decimalAllowed: false
       });
     else if(len > 1)
       this.setState({ 
         currentVal: `${newStr}`,
         start: false, 
-        operators: true, 
+        operatorsAllowed: true, 
         operatorsAgo: this.state.operatorsAgo-1,
         zeroFirstAgo: this.state.zeroFirstAgo-1,
         decimalAgo: this.state.decimalAgo-1
@@ -165,7 +165,7 @@ class App extends Component  {
       this.setState({ 
         currentVal: "_", 
         start: true, 
-        operators: false, 
+        operatorsAllowed: false, 
         operatorsAgo: 0,
         zeroFirst: true
       });  
@@ -177,13 +177,13 @@ class App extends Component  {
       await this.setState({ 
         currentVal: `${event.currentTarget.value}`,
         start: false, 
+        operatorsAllowed: false, 
+        numAllowed: true,
         oldOperators: this.state.operatorsAgo, 
-        operators: false, 
         operatorsAgo: this.state.operatorsAgo+1,
-        decimal: false,
+        decimalAllowed: false,
         decimalAgo: 0,
         zeroFirst: true,
-        numAllowed: true,
         zeroFirstAgo: this.state.zeroFirstAgo+1
       });
     }
@@ -191,13 +191,13 @@ class App extends Component  {
     {
       await this.setState({ 
         currentVal: `${this.state.currentVal}${event.currentTarget.value}`,
-        operators: false,
+        operatorsAllowed: false,
+        numAllowed: true,
         oldOperators: this.state.operatorsAgo,
         operatorsAgo: this.state.operatorsAgo+1,
-        decimal: false,
+        decimalAllowed: false,
         decimalAgo: 0,
         zeroFirst: true,
-        numAllowed: true,
         zeroFirstAgo: this.state.zeroFirstAgo+1
       });   
     }
@@ -208,7 +208,7 @@ class App extends Component  {
     if(splitResult[splitLen - 1] === 0)
     {
       this.setState({
-        operators: false
+        operatorsAllowed: false
       })
     }
   }
@@ -219,13 +219,13 @@ class App extends Component  {
       await this.setState({ 
         currentVal: `${event.currentTarget.value}`,
         start: false, 
+        operatorsAllowed: true, 
+        numAllowed: false,
         oldOperators: this.state.operatorsAgo, 
-        operators: true, 
         operatorsAgo: this.state.operatorsAgo+1,
-        //decimal: true,
+        //decimalAllowed: true,
         decimalAgo: this.state.decimalAgo+1,
         zeroFirst: false,
-        numAllowed: false,
         zeroFirstAgo: 0
       });
     }
@@ -233,10 +233,10 @@ class App extends Component  {
     {
       await this.setState({ 
         currentVal: `${this.state.currentVal}${event.currentTarget.value}`,
-        operators: true,
+        operatorsAllowed: true,
         oldOperators: this.state.operatorsAgo,
         operatorsAgo: this.state.operatorsAgo+1,
-        //decimal: true,
+        //decimalAllowed: true,
         decimalAgo: this.state.decimalAgo+1,
         zeroFirstAgo: 0
       });
@@ -255,8 +255,8 @@ class App extends Component  {
     if(splitResult[splitLen - 1] === 0)
     {
       this.setState({
-        decimal: false,
-        operators: false
+        operatorsAllowed: false,
+        decimalAllowed: false
       });
     }
     /*else
@@ -284,7 +284,7 @@ class App extends Component  {
           decimalClicked={this.decimalClickHandler}
           zeroClicked={this.zeroClickHandler}
           value={this.state.currentVal}
-          operatorsNotAllowed={!this.state.operators}
+          operatorsNotAllowed={!this.state.operatorsAllowed}
           decimalNotAllowed={!this.state.decimal}
           zeroNotAllowed={!this.state.zeroFirst}
           numNotAllowed={!this.state.numAllowed}>     
