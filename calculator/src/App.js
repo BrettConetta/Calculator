@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Calculator from './Components/Calculator/Calculator';
+import ErrorBoundary from './Containers/ErrorBoundary/ErrorBoundary';
 
 class App extends Component  {
 
@@ -275,21 +276,23 @@ class App extends Component  {
   render() {
     return (
       <div>
-        <Calculator 
-          numClicked={this.numberClickHandler}
-          operatorClicked={this.operatorClickHandler}
-          divideClicked={this.divideClickHandler}
-          clearClicked={this.clearClickHandler}
-          equalClicked={this.equalClickHandler}
-          bkspcClicked={this.bkspcClickHandler}
-          decimalClicked={this.decimalClickHandler}
-          zeroClicked={this.zeroClickHandler}
-          value={this.state.currentVal}
-          operatorsNotAllowed={!this.state.operatorsAllowed}
-          decimalNotAllowed={!this.state.decimal}
-          zeroNotAllowed={!this.state.zeroFirst}
-          numNotAllowed={!this.state.numAllowed}>     
-        </Calculator>
+        <ErrorBoundary>
+          <Calculator 
+            numClicked={this.numberClickHandler}
+            operatorClicked={this.operatorClickHandler}
+            divideClicked={this.divideClickHandler}
+            clearClicked={this.clearClickHandler}
+            equalClicked={this.equalClickHandler}
+            bkspcClicked={this.bkspcClickHandler}
+            decimalClicked={this.decimalClickHandler}
+            zeroClicked={this.zeroClickHandler}
+            value={this.state.currentVal}
+            operatorsNotAllowed={!this.state.operatorsAllowed}
+            decimalNotAllowed={!this.state.decimalAllowed}
+            zeroNotAllowed={!this.state.zeroFirst}
+            numNotAllowed={!this.state.numAllowed}>     
+          </Calculator>
+        </ErrorBoundary>
       </div>
     
       
