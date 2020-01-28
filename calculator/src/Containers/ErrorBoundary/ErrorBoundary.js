@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class ErrorHandler extends React.Component {
+class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
     this.state = { errorOccurred: false }
